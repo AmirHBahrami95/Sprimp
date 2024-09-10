@@ -82,13 +82,10 @@ From this point on it's the job of __sprimp.sh__ to utilize this perl script. so
 prepares some variables (like for instance the package name based on the .java file's parent directories) and then goes over the entries one by one. it then feed each entry
 to that perl script. onece the script is done, it replaces the original file with the newly generated .imp file and finally cleans up the mess
 
-
 ### TODO
 - [ ] make sprimp's `last_package` go as deep as possible using the "program name" in pom.xml
-- [ ] add lombok support (or maybe not, who gives a fuck, it's a one-liner u prick, do it per hand)
 - [ ] add plain java support
 - [ ] add support for choosing between java and spring
-
 
 ### Contact
 Again, if u have any questions or objections, or just wanted to banther, deosn't matter. a letter from a stranger is always welcome. you can reach me out under 
