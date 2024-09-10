@@ -86,6 +86,9 @@ sub get_imports{
 	open(my ($in), '+<', $filename) 
 	or die "failed to open file: ".$filename."\n";
 
+	my ($tmp)="might come in handy, since this is fucking perl :)";
+	my ($class_statement_reached)=0;
+
 	# separation of inputs
 	while(<$in>){
 		chomp($_);
@@ -99,11 +102,21 @@ sub get_imports{
 			push( @{$result{already_imports}}, $_ );
 			next;
 		}
-		elsif($_ =~ /[\s@=(]*([A-Z]\w+)/){ 
-			if(!contains(\@{$result{already}}, $1)){ # Capital case, not imported
+		while( $_ =~ /[\s@=(]*[^a-z]([A-Z]\w+)/g){  # handle multiple CamelCase words in a line
+			print "$1\n";
+			if( !contains(\@{$result{already}}, $1)){ # only starting with capital case, and not imported
 				$result{big_guys}->insert($1);
 			}
 		}
+		
+		# skip empty lines before first class statement reached
+		if( $_ =~ /public/){
+			$class_statement_reached=1;
+		}		
+		if( !$class_statement_reached && $_ =~/^[\s]+$/ ){
+			next; 
+		}
+
 		# happens anyways
 		push(@{$result{rest}}, $_);
 	}
